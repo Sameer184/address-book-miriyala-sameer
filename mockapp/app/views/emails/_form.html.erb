@@ -1,17 +1,15 @@
-<%= form_with(model: email) do |form| %>
-  <% if email.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(email.errors.count, "error") %> prohibited this email from being saved:</h2>
+<%= form_for [@person, @email], remote: true do |f| %>
+  <div class="form-group">
+    <%= f.label :email_address, 'Email Address' %>
+    <%= f.text_field :email_address, class: 'form-control' %>
+  </div>
 
-      <ul>
-        <% email.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="form-group">
+    <%= f.label :comment %>
+    <%= f.text_area :comment, class: 'form-control' %>
+  </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= f.submit 'Save', class: 'btn btn-primary' %>
   </div>
 <% end %>

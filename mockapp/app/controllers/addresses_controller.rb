@@ -1,70 +1,85 @@
 class AddressesController < ApplicationController
-  before_action :set_address, only: %i[ show edit update destroy ]
+  before_action :set_person
+  before_action :set_address, only: [:show, :edit, :update, :destroy]
 
-  # GET /addresses or /addresses.json
   def index
-    @addresses = Address.all
+    @addresses = @person.addresses
   end
 
-  # GET /addresses/1 or /addresses/1.json
   def show
   end
 
-  # GET /addresses/new
   def new
-    @address = Address.new
+    @address = @person.addresses.build
+    @countries = JSON.parse(File.read(Rails.root.join('config', 'countries.json')))
   end
 
-  # GET /addresses/1/edit
-  def edit
-  end
+  # def create
+  #   @address = @person.addresses.build(address_params)
+  #   if @address.save
+  #     redirect_to person_addresses_path(@person), notice: 'Address was successfully created.'
+  #   else
+  #     render 'new'
+  #   end
+  # end
 
-  # POST /addresses or /addresses.json
   def create
-    @address = Address.new(address_params)
-
-    respond_to do |format|
-      if @address.save
-        format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
-        format.json { render :show, status: :created, location: @address }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @address.errors, status: :unprocessable_entity }
+    @address = @person.addresses.build(address_params)
+    if @address.save
+      respond_to do |format|
+        format.html { redirect_to person_addresses_path(@person), notice: 'Address was successfully created.' }
+        format.js   # Render create.js.erb
       end
+    else
+      render 'new'
     end
   end
 
-  # PATCH/PUT /addresses/1 or /addresses/1.json
+  def edit
+    @countries = JSON.parse(File.read(Rails.root.join('config', 'countries.json')))
+  end
+
   def update
-    respond_to do |format|
-      if @address.update(address_params)
-        format.html { redirect_to address_url(@address), notice: "Address was successfully updated." }
-        format.json { render :show, status: :ok, location: @address }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @address.errors, status: :unprocessable_entity }
+    if @address.update(address_params)
+      respond_to do |format|
+        format.html { redirect_to person_addresses_path(@person), notice: 'Address was successfully updated.' }
+        format.js   # Render update.js.erb
       end
+    else
+      render 'edit'
     end
   end
 
-  # DELETE /addresses/1 or /addresses/1.json
-  def destroy
-    @address.destroy
+  # def update
+  #   if @address.update(address_params)
+  #     redirect_to person_addresses_path(@person), notice: 'Address was successfully updated.'
+  #   else
+  #     render 'edit'
+  #   end
+  # end
 
-    respond_to do |format|
-      format.html { redirect_to addresses_url, notice: "Address was successfully destroyed." }
-      format.json { head :no_content }
-    end
+  # def destroy
+  #   @address.destroy
+  #   redirect_to person_addresses_path(@person), notice: 'Address was successfully deleted.'
+  # end
+
+  def destroy
+    @address = Address.find(params[:id])
+    @address.destroy
+    redirect_to person_addresses_path(@person), notice: 'Address was successfully deleted.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_address
-      @address = Address.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def address_params
-      params.fetch(:address, {})
-    end
+  def set_person
+    @person = Person.find(params[:person_id])
+  end
+
+  def set_address
+    @address = @person.addresses.find(params[:id])
+  end
+
+  def address_params
+    params.require(:address).permit(:street, :town, :zip_code, :state, :country)
+  end
 end

@@ -1,10 +1,21 @@
-<h1>Editing email</h1>
+<div class="container">
+  <h1>Edit Email for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-<%= render "form", email: @email %>
+  <%= form_for [@person, @email] do |f| %>
+    <div class="form-group">
+      <%= f.label :email_address, 'Email Address' %>
+      <%= f.text_field :email_address, class: 'form-control', required: true %>
+    </div>
 
-<br>
+    <div class="form-group">
+      <%= f.label :comment %>
+      <%= f.text_area :comment, class: 'form-control' %>
+    </div>
 
-<div>
-  <%= link_to "Show this email", @email %> |
-  <%= link_to "Back to emails", emails_path %>
+    <div class="form-group">
+      <%= f.submit 'Update', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Back to Emails', person_emails_path(@person), class: 'btn btn-secondary' %>
 </div>

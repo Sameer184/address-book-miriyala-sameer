@@ -1,14 +1,42 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1>Addresses for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-<h1>Addresses</h1>
+  <%= link_to 'Add a New Address', new_person_address_path(@person), class: 'btn btn-primary mb-3' %>
 
-<div id="addresses">
-  <% @addresses.each do |address| %>
-    <%= render address %>
-    <p>
-      <%= link_to "Show this address", address %>
-    </p>
+  <% if @addresses.present? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Street</th>
+          <th>Town</th>
+          <th>ZIP Code</th>
+          <th>State</th>
+          <th>Country</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @addresses.each do |address| %>
+          <tr>
+            <td><%= address.street %></td>
+            <td><%= address.town %></td>
+            <td><%= address.zip_code %></td>
+            <td><%= address.state %></td>
+            <td><%= address.country %></td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Address Actions">
+                <%= link_to 'Edit', edit_person_address_path(@person, address), class: 'btn btn-sm btn-primary mr-1' %>
+                <%= button_to "Delete", person_address_path(@person, address), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No addresses found for <%= @person.first_name %>.</p>
   <% end %>
-</div>
 
-<%= link_to "New address", new_address_path %>
+  <%= link_to 'Back', @person %> |
+  <%= link_to "Address Book", people_path %>
+</div>

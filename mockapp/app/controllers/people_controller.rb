@@ -4,6 +4,7 @@ class PeopleController < ApplicationController
   # GET /people or /people.json
   def index
     @people = Person.all
+    @person = Person.new
   end
 
   # GET /people/1 or /people/1.json
@@ -19,31 +20,49 @@ class PeopleController < ApplicationController
   def edit
   end
 
-  # POST /people or /people.json
   def create
     @person = Person.new(person_params)
-
+    
     respond_to do |format|
       if @person.save
-        format.html { redirect_to person_url(@person), notice: "Person was successfully created." }
-        format.json { render :show, status: :created, location: @person }
+        format.html { redirect_to @person }
+        format.js   # This renders create.js.erb (see next step)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.html { render 'new' }
+        format.js   # This renders create.js.erb (see next step)
       end
     end
   end
 
-  # PATCH/PUT /people/1 or /people/1.json
+  # def update
+  #   @person = Person.find(params[:id])
+    
+  #   respond_to do |format|
+  #     if @person.update(person_params)
+  #       format.html { redirect_to @person }
+  #       format.js   # This renders update.js.erb (see next step)
+  #     else
+  #       format.html { render 'edit' }
+  #       format.js   # This renders update.js.erb (see next step)
+  #     end
+  #   end
+  # end
+
+  # def create
+  #   @person = Person.new(person_params)
+  #   if @person.save
+  #     redirect_to people_path, notice: 'Person was successfully created.'
+  #   else
+  #     @people = Person.all
+  #     render 'index'
+  #   end
+  # end
+
   def update
-    respond_to do |format|
-      if @person.update(person_params)
-        format.html { redirect_to person_url(@person), notice: "Person was successfully updated." }
-        format.json { render :show, status: :ok, location: @person }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.update(person_params)
+      redirect_to people_path, notice: 'Person was successfully updated.'
+    else
+      render 'edit'
     end
   end
 
@@ -51,10 +70,12 @@ class PeopleController < ApplicationController
   def destroy
     @person.destroy
 
-    respond_to do |format|
-      format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to people_url, notice: 'Person was successfully deleted.'
+
+    # respond_to do |format|
+    #   format.html { redirect_to people_url, notice: "Person was successfully destroyed." }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
@@ -65,6 +86,6 @@ class PeopleController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.fetch(:person, {})
+      params.require(:person).permit(:salutation, :first_name, :middle_name, :last_name, :ssn, :birth_date)
     end
 end

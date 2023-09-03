@@ -1,17 +1,29 @@
-<%= form_with(model: person) do |form| %>
-  <% if person.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(person.errors.count, "error") %> prohibited this person from being saved:</h2>
-
-      <ul>
-        <% person.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.submit %>
+<%= form_for(@person, remote: true) do |f| %>
+  <div class="form-group">
+    <%= f.label :salutation %>
+    <%= f.select :salutation, ['Mr.', 'Mrs.', 'Ms.'], { prompt: 'Select Salutation' }, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name, class: 'form-control', required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :middle_name %>
+    <%= f.text_field :middle_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, class: 'form-control', required: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :ssn %>
+    <%= f.text_field :ssn, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :birth_date %>
+    <%= f.date_field :birth_date, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
