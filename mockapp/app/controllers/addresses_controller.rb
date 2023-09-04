@@ -14,21 +14,12 @@ class AddressesController < ApplicationController
     @countries = JSON.parse(File.read(Rails.root.join('config', 'countries.json')))
   end
 
-  # def create
-  #   @address = @person.addresses.build(address_params)
-  #   if @address.save
-  #     redirect_to person_addresses_path(@person), notice: 'Address was successfully created.'
-  #   else
-  #     render 'new'
-  #   end
-  # end
-
   def create
     @address = @person.addresses.build(address_params)
     if @address.save
       respond_to do |format|
         format.html { redirect_to person_addresses_path(@person), notice: 'Address was successfully created.' }
-        format.js   # Render create.js.erb
+        format.js
       end
     else
       render 'new'
@@ -43,25 +34,12 @@ class AddressesController < ApplicationController
     if @address.update(address_params)
       respond_to do |format|
         format.html { redirect_to person_addresses_path(@person), notice: 'Address was successfully updated.' }
-        format.js   # Render update.js.erb
+        format.js
       end
     else
       render 'edit'
     end
   end
-
-  # def update
-  #   if @address.update(address_params)
-  #     redirect_to person_addresses_path(@person), notice: 'Address was successfully updated.'
-  #   else
-  #     render 'edit'
-  #   end
-  # end
-
-  # def destroy
-  #   @address.destroy
-  #   redirect_to person_addresses_path(@person), notice: 'Address was successfully deleted.'
-  # end
 
   def destroy
     @address = Address.find(params[:id])

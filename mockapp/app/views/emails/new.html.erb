@@ -1,21 +1,7 @@
 <div class="container">
   <h1>New Email for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-  <%= form_for [@person, Email.new] do |f| %>
-    <div class="form-group">
-      <%= f.label :email_address, 'Email Address' %>
-      <%= f.text_field :email_address, class: 'form-control', required: true %>
-    </div>
-
-    <div class="form-group">
-      <%= f.label :comment %>
-      <%= f.text_area :comment, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= f.submit 'Add', class: 'btn btn-success' %>
-    </div>
-  <% end %>
+  <%= render 'form' %>
 
   <%= link_to 'Back to Emails', person_emails_path(@person), class: 'btn btn-primary' %>
 </div>

@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
 
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
+  delete '/logout', to: 'sessions#destroy'
+
+  get '/register', to: 'users#new'
+
+  root "sessions#new"
+
+  resources :users, only: [:new, :create]
+
 
   resources :people do
     resources :addresses
@@ -7,7 +18,6 @@ Rails.application.routes.draw do
     resources :phone_numbers
   end
 
-  
   namespace :api do
     namespace :v1 do
       resources :people do
