@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
     @person = Person.new
     respond_to do |format|
       format.html
-      format.json { render json: people }
+      format.json { render json: @people }
       format.js
     end
   end
@@ -42,7 +42,7 @@ class PeopleController < ApplicationController
         format.js
       else
         format.html { render 'new' }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.json { render json: @person.errors }
         format.js
       end
     end
@@ -60,7 +60,7 @@ class PeopleController < ApplicationController
         format.js
       else
         format.html { render 'edit' }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.json { render json: @person.errors }
         format.js
       end
     end
@@ -76,7 +76,7 @@ class PeopleController < ApplicationController
         format.js
       rescue ActiveRecord::RecordNotFound
         format.html { redirect_to people_url }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        format.json { render json: @person.errors }
         format.js
       end
     end
