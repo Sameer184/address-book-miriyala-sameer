@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  database: mockapp_development
+  database: address_book_miriyala_sameer_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  username: mockapp
+  username: address_book_miriyala_sameer
 
   # The password associated with the postgres role (username).
   password: 12345678
@@ -57,8 +57,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: mockapp_test
-  username: mockapp
+  database: address_book_miriyala_sameer_test
+  username: address_book_miriyala_sameer
   password: 12345678
 
 # As with config/credentials.yml, you never want to store sensitive information,
@@ -83,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: mockapp_production
-  username: mockapp
-  password: <%= ENV["MOCKAPP_DATABASE_PASSWORD"] %>
+  database: address_book_miriyala_sameer_production
+  username: address_book_miriyala_sameer
+  password: <%= ENV["ADDRESS_BOOK_MIRIYALA_SAMEER_DATABASE_PASSWORD"] %>
