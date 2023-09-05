@@ -1,0 +1,15 @@
+# For handling the AJAX response after creating a new person. 
+# It updates the page dynamically based on the server's response.
+# If there are validation errors, prepend the error messages to the form
+#    to inform the user about the issues in their input.
+# Else If the person was successfully created, prepend the new person's details
+#   to the people table, and reset the form for the next entry.
+#  Remove any existing error messages
+$("#new_person .errors").remove();
+
+<% if @person.errors.any? %>
+  $("#new_person").prepend('<div class="errors"><%= j render "shared/errors", object: @person %></div>');
+<% else %>
+  $("#people tbody").prepend('<%= j render @person %>');
+  $("#new_person")[0].reset();
+<% end %>

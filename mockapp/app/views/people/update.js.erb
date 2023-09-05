@@ -1,0 +1,7 @@
+$("#edit_person .errors").remove();
+
+<% if @person.errors.any? %>
+  $("#edit_person").prepend('<div class="errors"><%= j render "shared/errors", object: @person %></div>');
+<% else %>
+  $("#person_<%= @person.id %>").replaceWith('<%= j render @person %>');
+<% end %>
