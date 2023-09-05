@@ -21,7 +21,7 @@ class PhoneNumbersController < ApplicationController
         format.js
       else
         format.html { render 'new' }
-        format.js
+        format.js { render json: @phone_number.errors }
       end
     end
   end
@@ -36,7 +36,7 @@ class PhoneNumbersController < ApplicationController
         format.js
       else
         format.html { render 'edit' }
-        format.js
+        format.js { render json: @phone_number.errors }
       end
     end
   end
