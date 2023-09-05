@@ -83,6 +83,3 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
-  database: address_book_miriyala_sameer_production
-  username: address_book_miriyala_sameer
-  password: <%= ENV["ADDRESS_BOOK_MIRIYALA_SAMEER_DATABASE_PASSWORD"] %>
