@@ -1,17 +1,44 @@
-<%= form_with(model: address) do |form| %>
-  <% if address.errors.any? %>
+<%= form_for [@person, @address], html: { class: 'form' } do |f| %>
+  <% if @address.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+      <h2><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h2>
 
       <ul>
-        <% address.errors.each do |error| %>
+        <% @address.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= f.label :street %>
+    <%= f.text_field :street, class: 'form-control', required: true %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :town %>
+    <%= f.text_field :town, class: 'form-control', required: true %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :zip_code %>
+    <%= f.text_field :zip_code, class: 'form-control', required: true, pattern: '\d+' %>
+    <small class="text-muted">Enter numbers only.</small>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :state %>
+    <%= f.text_field :state, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :country %>
+    <%= f.select :country, @countries, { include_blank: 'Select Country', selected: @address.country }, class: 'form-control' %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.submit 'Save Address', class: 'btn btn-success' %>
+    <%= link_to 'Back to Addresses', person_addresses_path(@person), class: 'btn btn-primary' %>
   </div>
 <% end %>

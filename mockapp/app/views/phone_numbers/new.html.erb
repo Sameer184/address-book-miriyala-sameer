@@ -1,9 +1,9 @@
-<h1>New phone number</h1>
+<div class="container">
+  <h1 class="mt-4">New Phone Number for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-<%= render "form", phone_number: @phone_number %>
+  <%= render 'form' %>
 
-<br>
-
-<div>
-  <%= link_to "Back to phone numbers", phone_numbers_path %>
+  <div class="mt-3">
+    <%= link_to 'Back', person_phone_numbers_path(@person), class: 'btn btn-secondary' %>
+  </div>
 </div>

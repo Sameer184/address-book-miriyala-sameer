@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  salutation: MyString
-  first_name: MyString
-  middle_name: MyString
-  last_name: MyString
-  ssn: MyString
-  birth_date: 2023-09-01
+  salutation: Mr
+  first_name: John
+  middle_name: A
+  last_name: Doe
+  ssn: 123-45-6789
+  birth_date: 1990-01-01
 
 two:
-  salutation: MyString
-  first_name: MyString
-  middle_name: MyString
-  last_name: MyString
-  ssn: MyString
-  birth_date: 2023-09-01
+  salutation: Ms
+  first_name: Jane
+  middle_name: B
+  last_name: Smith
+  ssn: 987-65-4321
+  birth_date: 1985-03-15

@@ -1,16 +1,73 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mockapp</title>
+    <title>AddressBook</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <style>
+    .logout-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+    }
+
+    .flash-message {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 10px;
+    }
+  </style>
+
   </head>
 
   <body>
     <%= yield %>
+
+    <% if logged_in? %>
+      <div class="logout-btn">
+        <div class="btn btn-success">
+          <%= link_to 'Logout', logout_path, method: :delete, class: "text-dark" %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if flash[:success] %>
+      <div class="flash-message">
+        <div class="alert alert-success">
+          <%= flash[:success] %>
+        </div>
+      </div>
+      <script>
+        setTimeout(function () {
+          $(".flash-message .alert-success").alert('close');
+        }, 2000);
+      </script>
+    <% end %>
+
+    <% if flash[:danger] %>
+      <div class="flash-message">
+        <div class="alert alert-danger">
+          <%= flash[:danger] %>
+        </div>
+      </div>
+      <script>
+        setTimeout(function () {
+          $(".flash-message .alert-danger").alert('close');
+        }, 2000);
+      </script>
+    <% end %>
+
   </body>
 </html>

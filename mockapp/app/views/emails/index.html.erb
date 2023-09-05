@@ -1,14 +1,37 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1>Emails for <%= @person.first_name %></h1>
 
-<h1>Emails</h1>
+  <%= link_to 'Add a New Email', new_person_email_path(@person), class: 'btn btn-primary mb-3' %>
 
-<div id="emails">
-  <% @emails.each do |email| %>
-    <%= render email %>
-    <p>
-      <%= link_to "Show this email", email %>
-    </p>
+  <% if @emails.present? %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Email Address</th>
+            <th>Comment</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @emails.each do |email| %>
+            <tr>
+              <td><%= email.email_address %></td>
+              <td><%= email.comment %></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Address Actions">
+                  <%= link_to 'Edit', edit_person_email_path(@person, email), class: 'btn btn-sm btn-primary  mr-1' %>
+                  <%= button_to "Delete", person_email_path(@person, email), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+                </div>  
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No emails found for <%= @person.first_name %>.</p>
   <% end %>
-</div>
 
-<%= link_to "New email", new_email_path %>
+  <%= link_to "Back to people", person_path(@person) %>
+</div>

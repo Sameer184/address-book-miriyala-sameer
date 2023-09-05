@@ -1,70 +1,65 @@
 class PhoneNumbersController < ApplicationController
-  before_action :set_phone_number, only: %i[ show edit update destroy ]
+  before_action :set_person
+  before_action :set_phone_number, only: [:show, :edit, :update, :destroy]
 
-  # GET /phone_numbers or /phone_numbers.json
   def index
-    @phone_numbers = PhoneNumber.all
+    @phone_numbers = @person.phone_numbers
   end
 
-  # GET /phone_numbers/1 or /phone_numbers/1.json
   def show
   end
 
-  # GET /phone_numbers/new
   def new
-    @phone_number = PhoneNumber.new
+    @phone_number = @person.phone_numbers.build
   end
 
-  # GET /phone_numbers/1/edit
+  def create
+    @phone_number = @person.phone_numbers.build(phone_number_params)
+    respond_to do |format|
+      if @phone_number.save
+        format.html { redirect_to person_phone_numbers_path(@person), notice: 'Phone number was successfully created.' }
+        format.js
+      else
+        format.html { render 'new' }
+        format.js { render json: @phone_number.errors }
+      end
+    end
+  end
+
   def edit
   end
 
-  # POST /phone_numbers or /phone_numbers.json
-  def create
-    @phone_number = PhoneNumber.new(phone_number_params)
-
-    respond_to do |format|
-      if @phone_number.save
-        format.html { redirect_to phone_number_url(@phone_number), notice: "Phone number was successfully created." }
-        format.json { render :show, status: :created, location: @phone_number }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @phone_number.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /phone_numbers/1 or /phone_numbers/1.json
   def update
     respond_to do |format|
       if @phone_number.update(phone_number_params)
-        format.html { redirect_to phone_number_url(@phone_number), notice: "Phone number was successfully updated." }
-        format.json { render :show, status: :ok, location: @phone_number }
+        format.html { redirect_to person_phone_numbers_path(@person), notice: 'Phone number was successfully updated.' }
+        format.js
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @phone_number.errors, status: :unprocessable_entity }
+        format.html { render 'edit' }
+        format.js { render json: @phone_number.errors }
       end
     end
   end
 
-  # DELETE /phone_numbers/1 or /phone_numbers/1.json
   def destroy
     @phone_number.destroy
-
     respond_to do |format|
-      format.html { redirect_to phone_numbers_url, notice: "Phone number was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to person_phone_numbers_path(@person), notice: 'Phone number was successfully deleted.' }
+      format.js
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_phone_number
-      @phone_number = PhoneNumber.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def phone_number_params
-      params.fetch(:phone_number, {})
-    end
+  def set_person
+    @person = Person.find(params[:person_id])
+  end
+
+  def set_phone_number
+    @phone_number = @person.phone_numbers.find(params[:id])
+  end
+
+  def phone_number_params
+    params.require(:phone_number).permit(:phone_number, :comment)
+  end
 end

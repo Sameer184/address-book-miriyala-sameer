@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  street: MyString
-  town: MyString
-  zip_code: MyString
-  state: MyString
-  country: MyString
+  street: Deep Ellum Way
+  town: Dallas
+  zip_code: 76013
+  state: LoneStar
+  country: United States
   person: one
 
 two:
-  street: MyString
-  town: MyString
-  zip_code: MyString
-  state: MyString
-  country: MyString
+  street: 8305 Mac Arthur Blvd
+  town: Irving
+  zip_code: 75092
+  state: LoneStar
+  country: United States
   person: two

@@ -1,14 +1,40 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1 class="mt-4">Phone Numbers for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-<h1>Phone numbers</h1>
+  <%= link_to 'Add a New Phone Number', new_person_phone_number_path(@person), class: 'btn btn-primary mb-3' %>
 
-<div id="phone_numbers">
-  <% @phone_numbers.each do |phone_number| %>
-    <%= render phone_number %>
-    <p>
-      <%= link_to "Show this phone number", phone_number %>
-    </p>
+  <% if @phone_numbers.present? %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Phone Number</th>
+            <th>Comment</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @phone_numbers.each do |phone_number| %>
+            <tr>
+              <td><%= phone_number.phone_number %></td>
+              <td><%= phone_number.comment %></td>
+              <td>
+                <div class="btn-group" role="group" aria-label="Phone Number Actions">
+                  <%= link_to 'Edit', edit_person_phone_number_path(@person, phone_number), class: 'btn btn-sm btn-primary mr-1' %>
+                  <%= button_to 'Delete', person_phone_number_path(@person, phone_number), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>No phone numbers found for <%= @person.first_name %>.</p>
   <% end %>
-</div>
 
-<%= link_to "New phone number", new_phone_number_path %>
+  <div class="mt-3">
+    <%= link_to 'Back', @person %> |
+    <%= link_to "Address Book", people_path %>
+  </div>
+</div>

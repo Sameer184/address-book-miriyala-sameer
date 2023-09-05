@@ -1,10 +1,79 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
 
-<%= render @person %>
+  <h1><%= @person.first_name %> <%= @person.last_name %></h1>
 
-<div>
-  <%= link_to "Edit this person", edit_person_path(@person) %> |
-  <%= link_to "Back to people", people_path %>
+  <div class="row">
+    <div class="col-md-4">
+      <p><strong>Salutation:</strong> <%= @person.salutation %></p>
+      <p><strong>Middle Name:</strong> <%= @person.middle_name.presence  %></p>
+      <p><strong>SSN:</strong> <%= @person.ssn.presence  %></p>
+      <p><strong>Birth Date:</strong> <%= @person.birth_date.presence  %></p>
+    </div>
 
-  <%= button_to "Destroy this person", @person, method: :delete %>
+    <div class="col-md-4">
+      <h2>Addresses</h2>
+      <% if @person.addresses.present? %>
+        <ul>
+          <% @person.addresses.each do |address| %>
+            <li>
+              <strong>Street:</strong> <%= address.street %><br>
+              <strong>Town:</strong> <%= address.town %><br>
+              <strong>ZIP Code:</strong> <%= address.zip_code %><br>
+              <strong>State:</strong> <%= address.state.presence  %><br>
+              <strong>Country:</strong> <%= address.country %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No addresses added yet. <%= link_to 'Manage Addresses', person_addresses_path(@person) %> to add one.</p>
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Emails</h2>
+      <% if @person.emails.present? %>
+        <ul>
+          <% @person.emails.each do |email| %>
+            <li>
+              <strong>Email Address:</strong> <%= email.email_address %><br>
+              <% if email.comment.present? %>
+                <strong>Comment:</strong> <%= email.comment %>
+              <% end %>     
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No emails added yet. <%= link_to 'Manage Emails', person_emails_path(@person) %> to add one.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h2>Phone Numbers</h2>
+    <% if @person.phone_numbers.present? %>
+      <ul>
+        <% @person.phone_numbers.each do |phNo| %>
+          <li>
+            <strong>Phone Number:</strong> <%= phNo.phone_number %><br>
+            <% if phNo.comment.present? %>
+              <strong>Comment:</strong> <%= phNo.comment.presence %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No phone numbers added yet. <%= link_to 'Manage Phone Numbers', person_phone_numbers_path(@person) %> to add one.</p>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to 'Manage Addresses', person_addresses_path(@person), class: 'btn btn-primary mr-2' %> 
+    <%= link_to 'Manage Emails', person_emails_path(@person), class: 'btn btn-primary mr-2' %> 
+    <%= link_to 'Manage Phone Numbers', person_phone_numbers_path(@person), class: 'btn btn-primary' %> 
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Edit this person", edit_person_path(@person) %> |
+    <%= link_to "Back to people", people_path %>
+  </div>
 </div>

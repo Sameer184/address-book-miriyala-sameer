@@ -1,10 +1,7 @@
-<h1>Editing email</h1>
+<div class="container">
+  <h1>Edit Email for <%= @person.first_name %> <%= @person.last_name %></h1>
 
-<%= render "form", email: @email %>
+  <%= render 'form' %>
 
-<br>
-
-<div>
-  <%= link_to "Show this email", @email %> |
-  <%= link_to "Back to emails", emails_path %>
+  <%= link_to 'Back to Emails', person_emails_path(@person), class: 'btn btn-secondary' %>
 </div>
