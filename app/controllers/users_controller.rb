@@ -10,7 +10,7 @@ class UsersController < ApplicationController
         flash[:success] = 'Registration successful! Please log in.'
         redirect_to login_path
       else
-        flash[:danger] = 'Password mismatch'
+        flash[:danger] = @user.errors.full_messages.join(', ')
         redirect_to new_user_path
       end
     end
