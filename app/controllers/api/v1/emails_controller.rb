@@ -47,10 +47,14 @@ module Api
   
         def set_person
           @person = Person.find(params[:person_id])
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'Person not found' }, status: :not_found
         end
   
         def set_email
           @email = @person.emails.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'Email not found' }, status: :not_found
         end
   
         def email_params

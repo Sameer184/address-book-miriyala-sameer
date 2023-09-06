@@ -53,6 +53,8 @@ class EmailsController < ApplicationController
 
   def set_person
     @person = Person.find(params[:person_id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'Person not found' }, status: :not_found
   end
 
   def set_email
