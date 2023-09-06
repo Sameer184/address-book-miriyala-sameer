@@ -47,6 +47,8 @@ module Api
   
         def set_person
           @person = Person.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+          render json: { error: 'Person not found' }, status: :not_found
         end
   
         def person_params

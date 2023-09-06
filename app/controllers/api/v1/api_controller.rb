@@ -1,7 +1,7 @@
 module Api
     module V1
       class ApiController < ApplicationController
-        before_action :authenticate_user # Add authentication if needed
+        before_action :set_person, only: [:show, :update, :destroy]
   
         # GET /api/v1/people
         def index
